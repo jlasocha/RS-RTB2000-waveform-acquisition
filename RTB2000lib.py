@@ -95,7 +95,7 @@ def _acq(chan, points_mode, single_shot, acq_type):
         raise RuntimeError("Not connected. Call connect() first.")
 
     _validate_channel(chan)
-    _configure_acq(chan)
+    _configure_acq()
     scope.write(f"{chan}:DATA:POIN {points_mode}")
     scope.query(f"{chan}:DATA:POIN?")
 
