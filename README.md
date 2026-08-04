@@ -1,14 +1,12 @@
 # RS-RTB2000-waveform-acquisition
 
 Minimal Python library for waveform and measurement acquisition from
-Rohde&Schwarz RTB2000-series oscilloscopes over USB, via PyVISA.
+Rohde&Schwarz RTB2000-series oscilloscopes over USB, via PyVISA. <br>
 I used RTB2004 with USB-B connection but it should work fine in other cases too.
 
 ## Requirements
 
 - NI-VISA (or another VISA backend) installed and available on your system.
-  PyVISA talks to the instrument through this backend — without it, PyVISA
-  has nothing to connect to.
 - Python 3.9+
 - Packages: NumPy, PyVisa
 
@@ -34,15 +32,17 @@ rtb.save(result, filename="myfile", filetype="csv", output_dir="data/") # saving
 rtb.disconnect()
 ```
 
-See `examples/basic_acquisition.py` for a complete runnable example.
+See `example.py` for a complete runnable example.
 
 ## Acquisition modes
 
 | Function     | Record length              | Triggers single-shot acquisition |
 |--------------|-----------------------------|-----------------------------------|
 | `fast_acq()` | Default (scope's current setting) | No - reads whatever is currently on screen |
-| `max_acq()`  | Maximum available record length   | Yes |
-| `dyn_acq()`  | Dynamic maximum (`DMAX`)          | Yes |
+| `max_acq()`  | Maximum available record length   | Yes, then goes back to previous state |
+| `dyn_acq()`  | Dynamic maximum (`DMAX`)          | Yes, then goes back to previous state |
+
+For additional information about DEF, MAX and DMAX read the RTB2000 manual. <br>
 
 All three return a dictionary:
 
@@ -66,7 +66,7 @@ All three return a dictionary:
 rtb.save(result, filename="myfile", filetype="csv", output_dir="data/")
 ```
 
-Supported `filetype` values: `"csv"`, `"npy"`.
+Currently supported `filetype` values: `"csv"`, `"npy"`.
 
 ## Known limitations
 - `read_termination` is intentionally left unset on the VISA session.
@@ -78,4 +78,4 @@ Supported `filetype` values: `"csv"`, `"npy"`.
 
 ## License
 
-MIT — see `LICENSE`.
+MIT 
